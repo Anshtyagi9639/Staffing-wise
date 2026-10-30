@@ -1,0 +1,17 @@
+# Netlify configuration for the Staffing Wise Next.js app.
+# The application lives at the repository root, so no base directory is set.
+# The Next.js Runtime (@netlify/plugin-nextjs, pinned in package.json devDependencies) turns the .next build output into
+# Netlify static assets, server functions (for the enquiry Server Action) and image CDN routes.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Set NEXT_PUBLIC_SITE_ENV=production and the real NEXT_PUBLIC_SITE_URL in the Netlify UI only for the production site.
+  # Without them, the site is noindex (robots Disallow + X-Robots-Tag), which is correct for previews.
+  # Secrets (EMAIL_API_KEY, ENQUIRY_WEBHOOK_SECRET) must be set in the Netlify UI, never in this file.
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

@@ -63,7 +63,7 @@ There is no CMS: content lives in typed modules and is deployed with the code.
 | Page copy, titles and meta descriptions | `app/<route>/page.tsx` |
 | Sitemap and `llms.txt` page list | [`lib/routes.ts`](lib/routes.ts) |
 
-The copy source of record is the client document, converted in [`docs/source-content.md`](docs/source-content.md).
+The copy source of record is the client document, converted in `docs/source-content.md` (kept locally, not published).
 If the client needs to edit content themselves regularly, see the CMS options in [`docs/growth-plan.md`](docs/growth-plan.md).
 
 ## Project map
@@ -93,7 +93,7 @@ scripts/images.mjs      photo optimisation and manifest
 - [Analytics, consent and conversion tracking](docs/analytics-and-tracking.md)
 - [Deployment and rollback](docs/deployment.md)
 - [Design system](docs/design-system.md)
-- [Questions and approvals needed from the client](docs/client-questions.md)
+- Questions and approvals needed from the client: `docs/client-questions.md` (private client material, kept locally and not in this public repository)
 - [Content roadmap, reporting and 30/60/90-day plan](docs/growth-plan.md)
 - [QA and test results](docs/qa-report.md)
 - [Image credits](docs/image-credits.md)

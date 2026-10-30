@@ -1,0 +1,34 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+/build
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+
+# debug
+npm-debug.log*
+
+# env files: never commit secrets
+.env
+.env.local
+.env*
+!.env.example
+
+# client source documents and working files stay out of the repository and the public folder
+*.docx
+*.pdf
+/screenshots/
+
+.vercel
+.netlify/
+
+# private client material: kept locally, never published (this repository is public)
+/docs/source-content.md
+/docs/client-questions.md

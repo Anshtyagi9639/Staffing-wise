@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/*
+ * Staffing Wise design system. Documented in docs/design-system.md.
+ * Colours come from the Staffing Wise logo (navy #09333f, yellow #f5ee31, orange #f7931e), which shares its colour family
+ * with the sister brand Customs Wise. Staffing Wise keeps its own identity: sentence-case Oswald headings in navy,
+ * the orange "people" accent and a warmer, lighter page rhythm.
+ * Tailwind's default palette is removed so off-brand colours cannot creep in.
+ */
+@theme {
+  --color-*: initial;
+  --color-navy-950: #041a21;
+  --color-navy-900: #09333f;
+  --color-navy-800: #0e4352;
+  --color-navy-700: #175a6c;
+  --color-slate: #4f6b76;
+  --color-sun: #f5ee31;
+  --color-sun-deep: #e4dc14;
+  --color-ember: #f7931e;
+  /* Orange dark enough for text on white (4.9:1) */
+  --color-ember-text: #a35406;
+  --color-mist: #f2f6f7;
+  --color-cloud: #e5edf0;
+  --color-line: #d3dee2;
+  --color-ink: #0b1f26;
+  --color-ink-soft: #3c525a;
+  --color-on-dark: #c9d8dd;
+  --color-white: #ffffff;
+  --color-error: #b42318;
+  --color-success: #1d7a3e;
+  --color-current: currentColor;
+  --color-transparent: transparent;
+
+  --font-display: var(--font-oswald), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --radius-brand: 8px;
+  --container-site: 76rem;
+  --shadow-card: 0 1px 2px rgb(4 26 33 / 0.06), 0 10px 28px -14px rgb(4 26 33 / 0.28);
+  --ease-brand: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-menu-in: menu-in 0.18s var(--ease-brand);
+  --animate-accordion-down: accordion-down 0.22s var(--ease-brand);
+  --animate-accordion-up: accordion-up 0.18s var(--ease-brand);
+  @keyframes menu-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+}
+
+:root {
+  --nav-h: 4.75rem;
+  color-scheme: light;
+}
+@media (max-width: 639px) {
+  :root { --nav-h: 4rem; }
+}
+
+@layer base {
+  html {
+    scroll-padding-top: calc(var(--nav-h) + 1rem);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    line-height: 1.65;
+    overflow-x: clip;
+  }
+  h1, h2, h3 {
+    @apply font-display font-medium text-navy-900;
+    line-height: 1.12;
+    letter-spacing: 0.002em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--color-ember);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+  [tabindex="-1"]:focus { outline: none; }
+  ::selection { background: var(--color-sun); color: var(--color-navy-950); }
+}
+
+@layer utilities {
+  .container-site {
+    width: min(var(--container-site), 100% - 2rem);
+    margin-inline: auto;
+  }
+  @media (min-width: 640px) {
+    .container-site { width: min(var(--container-site), 100% - 3rem); }
+  }
+  /* Deep navy band with a faint diagonal texture, used for heroes and CTA bands */
+  .bg-brand-band {
+    background-color: var(--color-navy-900);
+    background-image:
+      radial-gradient(120% 90% at 100% 0%, rgb(23 90 108 / 0.55) 0%, transparent 55%),
+      repeating-linear-gradient(135deg, rgb(255 255 255 / 0.025) 0 2px, transparent 2px 22px);
+  }
+}
+
+@layer components {
+  /* Small orange label above section headings */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.8rem] font-bold tracking-[0.14em] text-ember-text uppercase;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply block h-[3px] w-6 rounded-full bg-ember;
+  }
+  .on-dark .eyebrow { @apply text-ember; }
+
+  .prose-sw { max-width: 70ch; }
+  .prose-sw p, .prose-sw li { color: var(--color-ink-soft); }
+  .prose-sw p { margin: 0 0 1em; }
+  .prose-sw h2 { font-size: clamp(1.6rem, 2.4vw, 2rem); margin: 1.8em 0 0.5em; }
+  .prose-sw h2:first-child { margin-top: 0; }
+  .prose-sw h3 { font-size: 1.3rem; margin: 1.4em 0 0.4em; }
+  .prose-sw ul { list-style: disc; padding-left: 1.25em; margin: 0 0 1.2em; }
+  .prose-sw li { margin: 0.35em 0; }
+  .prose-sw li::marker { color: var(--color-ember); }
+  .prose-sw a, .link-inline {
+    @apply font-semibold text-navy-800 underline decoration-ember decoration-2 underline-offset-4 transition-colors hover:text-ember-text;
+  }
+  .prose-sw strong { color: var(--color-ink); }
+  .prose-sw ol { list-style: decimal; padding-left: 1.4em; margin: 0 0 1.2em; }
+  .prose-sw ol li::marker { color: var(--color-ember-text); font-weight: 700; }
+
+  /* Blog article typography: comfortable measure and spacing on every screen size */
+  .prose-article { font-size: 1.06rem; line-height: 1.75; }
+  .prose-article h2 { font-size: clamp(1.6rem, 2.6vw, 2.05rem); margin: 2em 0 0.55em; }
+  .prose-article h3 { font-size: 1.32rem; margin: 1.5em 0 0.45em; }
+  .prose-article .callout {
+    max-width: 70ch;
+    margin: 1.6em 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--color-ember);
+    border-radius: 0 var(--radius-brand) var(--radius-brand) 0;
+    background: var(--color-mist);
+  }
+  .prose-article .callout p { margin: 0; color: var(--color-ink); }
+  .table-sw {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 1.4em 0 1.8em;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-brand);
+  }
+  .table-sw table { width: 100%; min-width: 38rem; border-collapse: collapse; font-size: 0.93rem; line-height: 1.5; }
+  .table-sw th, .table-sw td { padding: 0.7rem 0.9rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--color-line); }
+  .table-sw thead th { background: var(--color-navy-900); color: var(--color-white); font-weight: 600; }
+  .table-sw tbody th { color: var(--color-navy-900); font-weight: 700; }
+  .table-sw td { color: var(--color-ink-soft); }
+  .table-sw tr:last-child > * { border-bottom: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scroll reveal: content is fully visible without JavaScript; the hidden state applies only under html.js-reveal. */
+.js-reveal [data-reveal]:not(.is-revealed) { opacity: 0; transform: translateY(16px); }
+.js-reveal [data-reveal] { transition: opacity 0.6s var(--ease-brand), transform 0.6s var(--ease-brand); }
